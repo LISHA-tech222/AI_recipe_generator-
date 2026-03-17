@@ -63,7 +63,7 @@ source venv/bin/activate
 
 ### Step 3: Install Dependencies
 ```bash
-pip install gradio pytesseract pillow opencv-python fpdf ollama
+pip install -r requirements.txt
 ```
 
 ### Step 4: Run the Application
