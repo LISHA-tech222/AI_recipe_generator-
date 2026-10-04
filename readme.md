@@ -6,12 +6,14 @@ An intelligent AI-powered recipe generator that creates personalized recipes bas
 
 ## 🚀 Features
 
-- 🧠 AI-based recipe generation using LLM (Ollama - LLaMA 3.2)
-- 📷 OCR-based ingredient extraction from images
-- ⚠️ Allergy-aware ingredient filtering and substitution
+- 🧠 AI-based recipe generation using a local LLM (Ollama - LLaMA 3.2 3B)
+- 📷 OCR-based ingredient extraction from images (Tesseract)
+- ⚠️ Allergy-aware ingredient filtering and substitution (gluten, dairy, seafood, nuts)
+- 🥗 Diet preferences: Vegetarian, Non-Vegetarian, Vegan
+- 🍝 Cuisines: Indian, Italian, Chinese, Arabian, Korean
 - 🌍 Multilingual recipe generation (English, Hindi, Tamil, Telugu)
+- 👥 Adjustable servings and maximum cooking time
 - 📄 PDF export (English only)
-- 🎯 Personalized cooking instructions
 
 ---
 
@@ -19,10 +21,22 @@ An intelligent AI-powered recipe generator that creates personalized recipes bas
 
 - Python
 - Gradio (UI)
-- Ollama (LLM - LLaMA 3.2)
-- Tesseract OCR
-- OpenCV / PIL
+- Ollama (LLM - LLaMA 3.2 3B)
+- Tesseract OCR (pytesseract)
+- Pillow
 - FPDF (PDF generation)
+
+---
+
+## 📁 Project Structure
+
+```
+AI_Recipe_Generator/
+├── app.py            # Gradio UI and main generation pipeline
+├── functions.py      # OCR, allergy processing, LLM call, PDF export
+├── requirements.txt  # Python dependencies
+└── readme.md
+```
 
 ---
 
@@ -66,7 +80,7 @@ Install all dependencies:
 pip install -r requirements.txt
 ```
 
-If requirements.txt is missing, install manually:
+If requirements.txt is missing, install the core packages manually:
 
 ```bash
 pip install gradio pytesseract pillow opencv-python fpdf ollama
@@ -106,11 +120,13 @@ pip install -r requirements.txt
 
 Make sure Ollama is running in background.
 
-Test:
+Test that the model is available:
 
 ```bash
 ollama list
 ```
+
+You should see `llama3.2:3b` in the list.
 
 ---
 
@@ -137,11 +153,14 @@ Open it in your browser.
 
    * Diet preference
    * Cuisine
-   * Allergies
-   * Language
+   * Allergies (one of: `gluten`, `dairy`, `seafood`, `nuts`)
+   * Output language
+   * Servings and cooking time (minutes)
 3. Click **Generate Recipe**
-4. View recipe
+4. View the recipe
 5. Download PDF (English only)
+
+If both an image and text are provided, the OCR output and typed ingredients are combined.
 
 ---
 
@@ -151,6 +170,9 @@ Open it in your browser.
 * Handwritten input may produce noisy results
 * PDF export supports **English only**
 * Multilingual output is generated directly by the LLM
+* Allergy substitution uses a built-in database covering gluten, dairy, seafood and nuts; the LLM is also instructed to avoid the allergen
+* Ollama must be running locally before generating a recipe
+* The PDF is saved as `Generated_Recipe.pdf` in the project folder
 
 ---
 
